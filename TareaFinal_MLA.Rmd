@@ -33,7 +33,10 @@ data= eurosoccer
 
 data %>% head %>% kable %>% kable_classic_2()
 ```
-```{r}
+
+Vista general de la base de datos
+
+```{r echo=FALSE}
 summary(eurosoccer)
 ```
 
@@ -41,8 +44,7 @@ summary(eurosoccer)
 levels(data$League)
 ```
 
-Siguiente pasos:
-Seleccionamos las ligas que nos interesan
+Siguiente pasos: Seleccionamos las ligas que nos interesan
 
 ```{r echo=FALSE}
 # Seleccionamos las ligas que nos interesan
