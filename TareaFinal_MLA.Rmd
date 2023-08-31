@@ -1,0 +1,76 @@
+---
+title: "TareaFinal"
+author: "Marianne Lichtenberg"
+date: "`r Sys.Date()`"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE, comment = NA)
+```
+
+```{r    echo=FALSE}
+library(tidyverse)
+library(tidymodels)
+library(dplyr)
+library(kableExtra)
+
+devtools::install_github("kupietz/kableExtra")
+```
+
+## Tarea: Prueba Robusta
+
+Prueba para 2 muestra, de la base datos trabajar con los equipos de España e Netherlands. Usaremos funcion para datos robustos de 2 muestras.
+
+```{r  echo=FALSE }
+library(WRS2)
+
+data("eurosoccer")
+
+data= eurosoccer
+
+data %>% head %>% kable %>% kable_classic_2()
+```
+```{r}
+summary(eurosoccer)
+```
+
+```{r  echo=FALSE}
+levels(data$League)
+```
+
+Siguiente pasos:
+Seleccionamos las ligas que nos interesan
+
+```{r echo=FALSE}
+# Seleccionamos las ligas que nos interesan
+
+Spain_Netherlands =data [which(data$League == "Spain" | data$League == "Netherlands"),]
+
+
+## Eliminamos los niveles que no utilizaremos
+
+Spain_Netherlands$League = droplevels(Spain_Netherlands$League)
+
+levels(Spain_Netherlands$League)
+```
+
+La distribución de los datos
+
+```{r pressure, echo=FALSE}
+
+boxplot(Spain_Netherlands$GoalsConceded~Spain_Netherlands$League)
+
+```
+
+```{r   echo=FALSE}
+
+pb2gen(GoalsConceded~League,
+       data=data,
+       est = "median")
+
+```
+
+De la prueba robusta se puede concluir que no hay diferencia significativa entre las medianas de los grupos de España y Países Bajos, son los resultados del análisis.
